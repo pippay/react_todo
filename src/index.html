@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="../lib/react.js"></script>
+		<script src="../lib/react-dom.js"></script>
+		<script src="../lib/browser.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="container-left">
+				<div class="sidebar">
+					<div id="example"></div>
+				</div>
+			</div>
+			<div class="container-right">
+				<div class="content">
+					<h3>title</h3>
+					<p>content</p>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/babel">
+			var RepoList = React.createClass({
+				render: function() {
+					var responseData = [
+						{
+							group_id:1,
+							group_name:'工程研发部门',
+							group_count:120,
+							group_status:false,
+							childs:[
+								{
+									id:1,
+									name:'Mac开发工程师',
+									count:9,
+									status:false,
+								},
+								{
+									id:2,
+									name:'IOS APP测试工程师',
+									count:17,
+									status:false,
+								},
+								{
+									id:3,
+									name:'Android远程控制工程师',
+									count:17,
+									status:true,
+								},
+							],
+						},
+						{
+							group_id:1,
+							group_name:'产品设计部门',
+							group_count:136,
+							group_status:true,
+							childs:[
+								{
+									id:4,
+									name:'网页设计师',
+									count:47,
+									status:false,
+								},
+								{
+									id:5,
+									name:'ID／工业设计师',
+									count:17,
+									status:true,
+								},
+							],
+						},
+					];
+
+					var repoList = responseData.map(function (group, index) {
+						var groupName  = group.group_name;
+						var groupCount = group.group_count;
+						var groupChild = group.childs;
+						const groupElement = <p id="group-item"><input type="checkbox"/>{groupName}-{groupCount}</p>;
+						var childMap   = groupChild.map(function (child, index) {
+							const childElement = <p id="child-item"><input type="checkbox"/>{child.name}-{child.count}</p>
+							if (index == 0) {
+								return (
+									<div>
+										{groupElement}
+										{childElement}
+									</div>
+									);
+							} else {
+								return (
+									<div>
+										{childElement}
+									</div>
+								);
+							}
+						});
+						return (childMap);
+					});
+
+					return (
+						<main>
+							<h1>招聘职位</h1>
+							<div>{repoList}</div>
+						</main>
+					);
+				}
+			});
+
+			ReactDOM.render(
+				<RepoList/>,
+				document.getElementById('example')
+			);
+    	</script>
+	</body>
+</html>
